@@ -44,8 +44,8 @@ references:
 jobs:
 
   # x64
-  manylinux-x64_cp27-cp27mu:
-    <<: *x64_build_job
+#  manylinux-x64_cp27-cp27mu:
+#    <<: *x64_build_job
   manylinux-x64_cp37-cp37m_upload-sdist:
     <<: *x64_build_job
 
@@ -87,8 +87,8 @@ workflows:
   build-test-deploy:
     jobs:
       # x64
-      - manylinux-x64_cp27-cp27mu:
-          <<: *no_filters
+#      - manylinux-x64_cp27-cp27mu:
+#          <<: *no_filters
       - manylinux-x64_cp37-cp37m_upload-sdist:
           <<: *no_filters
       # x86
@@ -100,7 +100,7 @@ workflows:
       - deploy-master:
           requires:
             # x64
-            - manylinux-x64_cp27-cp27mu
+#            - manylinux-x64_cp27-cp27mu
             - manylinux-x64_cp37-cp37m_upload-sdist
             # x86
 #            - manylinux-x86_cp27-cp27mu
@@ -111,7 +111,7 @@ workflows:
       - deploy-release:
           requires:
             # x64
-            - manylinux-x64_cp27-cp27mu
+#            - manylinux-x64_cp27-cp27mu
             - manylinux-x64_cp37-cp37m_upload-sdist
             # x86
 #            - manylinux-x86_cp27-cp27mu
