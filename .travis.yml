@@ -1,0 +1,63 @@
+branches:
+ only:
+  - master
+  - /^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$/
+
+language: python
+
+matrix:
+  include:
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.7.2
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=2.7.15
+
+cache:
+  directories:
+    - $HOME/.pyenv/versions/3.7.2
+    - $HOME/.pyenv/versions/2.7.15
+    - $HOME/downloads
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; ln -s $(which python2) $HOME/bin/python; fi
+  - python -m pip install --disable-pip-version-check --upgrade pip
+  - pip install -U scikit-ci scikit-ci-addons
+  - ci_addons --install ../addons
+
+install:
+  - ci install
+
+script:
+  - ci test
+
+after_success:
+  - ci after_test
+
+deploy:
+  # deploy-release
+  - provider: script
+    script: pwd && ls dist;echo "deploy-release" && ~/.pyenv/versions/${PYTHON_VERSION}/bin/twine upload -u $PYPI_USER -p $PYPI_PASSWORD --skip-existing dist/*
+    skip_cleanup: true
+    on:
+      repo: ${TRAVIS_REPO_SLUG}
+      tags: true
+  # deploy-master
+  - provider: script
+    script: pwd && ls dist;echo "deploy-master" && echo "not implemented"
+    skip_cleanup: true
+    on:
+      repo: ${TRAVIS_REPO_SLUG}
+      branch: master
+
+env:
+  global:
+    # PYPI_USER
+    - secure: "sA3o5PT2DKbLWuJPTIr678arQbaeeIJ2ALKyyYlbzIQllhXtO3kkLlXmwcoReOKwwfW7VZdCU+G95bBpIsuhs8BjFmtOiZ3wwM93zah1r1MsJt/SybZdAdcZjdK0UCn9uYoU2mKshzpSEEtwfwMbVPeo4koJGQ7quFm1Gg06nmkpUvGmWQt6Fjr8f7xgZ3Rr07LcMjbI/cyuYL2kKPRFVXB8IFgY/ZDl7LjyaiaBc7HNd1W4E47GhF9dLJ3ueKW7kGamqj2/tv7mbrAnKG4F89uj4zIb5BWlo9QDuvs6M6uTf/QlXjb2oZ0KrX8Zt4T6eUz+zSZzpQ8L7P1rn7CwXbx9QksQbe8SKY6jz9yy7gyr9zTglJZySHo/6sMOv1zv9Akya9eVtfw8yENmCX8Q/5cMmmc1AfMwzrXWQrmEETAOPGwCu6LrLlILY2YNAY7B6aNOhxmGm9QZT3BBmkXf5JATPqHL0NC7x8B7yNFeod17To/wMaxpPsitxpsfssg4ff/D9uRw9GVVCp6jjUHHzcyiFHxxdwzfY1YslBqVQYTU8vbGeOm5WpBtdeaHr956NHmRBlvOZ4SpJncXAoAFFbQdajfvXrjjMxKyBdj7aTHOsRSAWmOw+o5Gba71uus2M5f5iDyGHM6hX7t7RSoW/WYubsROU66eUZBWpWkAvh8="
+    # PYPI_PASSWORD
+    - secure: "shzENcgaOOVspVbdH0JsXVP9761809YNulGwB6qpBWzy+WURP7lYOSlUiAgSvPV576E80O7VvdUX5s/QQbcZNfLE25+mdSn5LsDocn+/KunKX1uHJkAXz0XpiOeuLMRjIQ+zSbTxVBkk7pe4dw6Y4ug+bSCuoe9IWo/JuOP5TNV2lZuiO2ggyGvXeXNCTJTzPsnCXq4rqbe5UM69JSyM8eGc79IVUUF02UfKhBBL2Six41yVDfN60YW+KLREI/g0/rg3PeagBVzAYvl3wftFxF3TCB6XujoIMPbgP/XFLcJA5+EU+5Uq8tXuPp2oU2UDySMjj67KjnWOsoUtqym7uqGTnN7HtftPGr9K77/KFmYc8OvEhhzzgaNkN2zFpARsYO+X5+KYhEAxD0q7u+7bjs9F8xe3bYFFtZB8DpGkTxlX0qAJ6Q1sNqb3sYDRzXQtCmGY4FO/f1qx0wY824JwaVDRn9GPRifkCoIqN8yuBTEldC8Ht50xiKzOBf+jAuZ7zVJAh9rCwzwQpq0xXY34cTUcOC7tnKVrgXZUxPz79cYeDbJ8VXe0oFPCH8EsgJBQ+7rkvZsljjXH2asH7K3cydECp/00J1HxSTHwq/ek+Sk4WZsLiGBTJUCv7aouBu51orviKeANVFvtsUgkRNwygX+jQAe7bCmQxlInQN7zwtQ="
