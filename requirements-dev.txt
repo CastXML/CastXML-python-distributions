@@ -1,6 +1,8 @@
 cmake
+coverage>=4.2
 flake8>=3.0.4
 pytest>=4.5.0
+pytest-cov>=2.4.0
 pytest-runner>=5.1
 pytest-virtualenv>=1.7.0
 scikit-build>=0.10.0
