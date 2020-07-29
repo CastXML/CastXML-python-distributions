@@ -1,4 +1,5 @@
 cmake
+flake8>=3.0.4
 pytest>=4.5.0
 pytest-runner>=5.1
 pytest-virtualenv>=1.7.0

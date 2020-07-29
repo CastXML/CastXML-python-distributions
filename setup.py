@@ -9,6 +9,7 @@ from skbuild import setup
 with open('README.md', 'r') as fp:
     readme = fp.read()
 
+
 def parse_requirements(filename):
     with open(filename, 'r') as file:
         return TextFile(filename, file).readlines()
