@@ -61,5 +61,5 @@ FetchContent_Populate(castxmlrelease
 set(CASTXML_RELEASE_DIR ${castxmlrelease_SOURCE_DIR})
 
 set(castxml_executable ${CASTXML_RELEASE_DIR}/bin/castxml${CMAKE_EXECUTABLE_SUFFIX})
-
-install(PROGRAMS ${castxml_executable} DESTINATION castxml/data/bin)
+install(PROGRAMS ${castxml_executable} DESTINATION bin)
+install(DIRECTORY ${CASTXML_RELEASE_DIR}/share/ DESTINATION share)
