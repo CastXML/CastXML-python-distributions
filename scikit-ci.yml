@@ -35,17 +35,8 @@ before_build:
 
 build:
   commands:
-    # Source distribution
-    - python setup.py --hide-listing sdist
     # Built distribution (wheel)
     - python setup.py --hide-listing bdist_wheel $<SETUP_BDIST_WHEEL_ARGS> -- $<SETUP_CMAKE_ARGS>
-    # Cleanup
-    - python: |
-              import glob, os
-              if os.environ.get("UPLOAD_SDIST", "") == "":
-                  sdist=(glob.glob("dist/*.tar.gz") + glob.glob("dist/*.zip"))[0]
-                  print("Deleting [%s]" % sdist)
-                  os.remove(sdist)
 
   circle:
     commands:
