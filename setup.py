@@ -9,6 +9,7 @@ from skbuild import setup
 with open('README.md', 'r') as fp:
     readme = fp.read()
 
+
 def parse_requirements(filename):
     with open(filename, 'r') as file:
         return TextFile(filename, file).readlines()
@@ -44,9 +45,14 @@ setup(
     },
 
     url=r'https://github.com/CastXML/CastXML#readme',
-    download_url=r'https://data.kitware.com/#collection/57b5c9e58d777f126827f5a1/folder/57b5de948d777f10f2696370',
+    download_url='',
+    project_urls={
+        "Bug Tracker": "https://github.com/CastXML/CastXML-python-distributions/issues",
+        "Documentation": "https://github.com/CastXML/CastXML/blob/master/doc/manual/castxml.1.rst#castxml1",
+        "Source Code": "https://github.com/CastXML/CastXML-python-distributions"
+    },
 
-    description=r'arse C-family source files and optionally write a subset of '
+    description=r'Parse C-family source files and optionally write a subset of '
                 r'the Abstract Syntax Tree (AST) to a representation in XML.',
 
     long_description=readme,

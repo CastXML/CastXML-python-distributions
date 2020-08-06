@@ -44,9 +44,9 @@ message(STATUS "CastXML Python Distribution")
 message(STATUS "")
 message(STATUS "  ARCHIVE_DOWNLOAD_DIR      : ${ARCHIVE_DOWNLOAD_DIR}")
 message(STATUS "")
-message(STATUS "    src_archive             : ${src_archive}")
-message(STATUS "    <src_archive>_url       : ${${src_archive}_url}")
-message(STATUS "    <src_archive>_sha256    : ${${src_archive}_sha512}")
+message(STATUS "    binary_archive             : ${binary_archive}")
+message(STATUS "    <binary_archive>_url       : ${${binary_archive}_url}")
+message(STATUS "    <binary_archive>_sha512    : ${${binary_archive}_sha512}")
 message(STATUS "")
 message(STATUS "*********************************************")
 
@@ -61,5 +61,5 @@ FetchContent_Populate(castxmlrelease
 set(CASTXML_RELEASE_DIR ${castxmlrelease_SOURCE_DIR})
 
 set(castxml_executable ${CASTXML_RELEASE_DIR}/bin/castxml${CMAKE_EXECUTABLE_SUFFIX})
-
-install(PROGRAMS ${castxml_executable} DESTINATION castxml/data/bin)
+install(PROGRAMS ${castxml_executable} DESTINATION bin)
+install(DIRECTORY ${CASTXML_RELEASE_DIR}/share/ DESTINATION share)

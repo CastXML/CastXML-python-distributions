@@ -1,0 +1,61 @@
+branches:
+ only:
+  - master
+  - /^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$/
+
+language: python
+
+matrix:
+  include:
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=3.7.2
+
+    - os: osx
+      language: generic
+      env:
+        - PYTHON_VERSION=2.7.15
+
+cache:
+  directories:
+    - $HOME/.pyenv/versions/3.7.2
+    - $HOME/.pyenv/versions/2.7.15
+    - $HOME/downloads
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; ln -s $(which python2) $HOME/bin/python; fi
+  - python -m pip install --disable-pip-version-check --upgrade pip
+  - pip install -U scikit-ci scikit-ci-addons
+  - ci_addons --install ../addons
+
+install:
+  - ci install
+
+script:
+  - ci test
+
+after_success:
+  - ci after_test
+
+deploy:
+  # deploy-release
+  - provider: script
+    script: pwd && ls dist;echo "deploy-release" && ~/.pyenv/versions/${PYTHON_VERSION}/bin/twine upload -u $PYPI_USER -p $PYPI_PASSWORD --skip-existing dist/*
+    skip_cleanup: true
+    on:
+      repo: ${TRAVIS_REPO_SLUG}
+      tags: true
+  # deploy-master
+  - provider: script
+    script: pwd && ls dist;echo "deploy-master" && echo "not implemented"
+    skip_cleanup: true
+    on:
+      repo: ${TRAVIS_REPO_SLUG}
+      branch: master
+
+env:
+  global:
+    # PYPI_PASSWORD
+    - secure: "KGHel2nKEcPM6VAYgBdwPEKghrUfylvtAXsXm2kjxzTT2zCiOYWTy0pb1grKlvcasRcvSViuiGL6x/tyTT2mh5Qf74S5WgIbgo2VEFIP9XekNRiYFOp4UEfup0Roa4tL3Yvb+xkcF5kIe4mhf4hddAweJN0KWZt+Vk6Q6udJ4c+WyIWFaXIpl1/QyAeGs6tSpYKQiE40aGUYcRgKrZf1ydPqLJ1SKul13nurnZ3CsH7GcezsVbmdV0QvUcfPwefMSO+pMMMirQmKj977dPRz7CI0hlw0sJTGIOLxHIQNYBMBYu6G81yjyNHh2BKjAXv7V4K5Rc9TmCdAQYSmkhRQVBsaLxIYMuux5w8ms+ldd0oXd38UoFLhZyu4QZBAROEsTRPWLugzsJWgPJRQazv2ENZE5QykzIMJJf4VpTGWQfhbCgUA7GIHUYYKFiJ6Jr33Fzv1HKVhUabSB2yWYiMYoy54rosvxiwSacrC0aWEFGiB9D6sbEQ9rKdHY2ivmT1u/iFw+Qb59uaWy0lm1qoYiLbBt5tpJr5epdc+rOo9i0QB81KhU7/4Hf4kr+QRGxIp/jXEpbrKqgG6YCTzxEMZ2PV3uzV2Z3ZUqupRdcihmouhy7TnbIG7vhm7fVtold9Wwmoiv46/FT2v0EjjiMunhgEhk7t5Lia+qwJgPzrx5xw="
