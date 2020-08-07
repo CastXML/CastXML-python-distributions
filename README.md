@@ -50,6 +50,8 @@ Maintainers
 
 * [How to update CastXML version ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/update_ninja_version.rst)
 
+* [How to make a release ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/make_a_release.rst)
+
 Miscellaneous
 =============
 
