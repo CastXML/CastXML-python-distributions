@@ -1,7 +1,9 @@
-# CastXML
+# CastXML Python Distribution
 
 Introduction
 ============
+
+The latest CastXML python wheels provide CastXML 0.3.4 executable.
 
 CastXML is a C-family abstract syntax tree XML output tool.
 
@@ -17,6 +19,11 @@ Manual
 See the [castxml(1)][manual] manual page for instructions to run the tool.
 
 [manual]: https://github.com/CastXML/CastXML/blob/master/doc/manual/castxml.1.rst#castxml1
+
+Maintainers
+===========
+
+* [How to update CastXML version ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/update_ninja_version.rst)
 
 License
 =======
