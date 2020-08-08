@@ -44,7 +44,7 @@ setup(
         ]
     },
 
-    url=r'https://github.com/CastXML/CastXML#readme',
+    url=r'https://github.com/CastXML/CastXML-python-distributions#readme',
     download_url='',
     project_urls={
         "Bug Tracker": "https://github.com/CastXML/CastXML-python-distributions/issues",
