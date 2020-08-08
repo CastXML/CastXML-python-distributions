@@ -5,7 +5,7 @@ Making a release
 ================
 
 A core developer should use the following steps to create a release `X.Y.Z` of
-**ninja-python-distributions** on `PyPI`_.
+**CastXML-python-distributions** on `PyPI`_.
 
 This is usually done after :ref:`updating_castxml_version`.
 
