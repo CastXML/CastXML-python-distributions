@@ -20,6 +20,7 @@ matrix:
 
 cache:
   directories:
+    - $HOME/.pyenv_cache
     - $HOME/.pyenv/versions/3.7.8
     - $HOME/.pyenv/versions/2.7.15
     - $HOME/downloads
