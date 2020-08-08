@@ -140,6 +140,6 @@ means that ``echo "Hello"`` should be copied and evaluated in the terminal.
 
 .. _AppVeyor: https://ci.appveyor.com/project/CastXML/CastXML-python-distributions/history
 .. _CircleCI: https://circleci.com/gh/CastXML/CastXML-python-distributions
-.. _Travis CI: https://travis-ci.org/CastXML/CastXML-python-distributions/pull_requests
+.. _Travis CI: https://travis-ci.org/github/CastXML/CastXML-python-distributions/pull_requests
 
 .. _PyPI: https://pypi.org/project/CastXML
