@@ -25,9 +25,9 @@ Latest Release
 
 [![][pypi-version-img]][pypi] [![][pypi-download-img]][pypi]
 
-[pypi-version-img]: https://img.shields.io/pypi/v/ninja.svg
-[pypi-download-img]: https://img.shields.io/badge/downloads-2535k%20total-green.svg
-[pypi]: https://pypi.python.org/pypi/ninja
+[pypi-version-img]: https://img.shields.io/pypi/v/castxml.svg
+[pypi-download-img]: https://img.shields.io/badge/downloads-0%20total-green.svg
+[pypi]: https://pypi.python.org/pypi/castxml
 
 Build Status
 ============
@@ -48,7 +48,7 @@ Build Status
 Maintainers
 ===========
 
-* [How to update CastXML version ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/update_ninja_version.rst)
+* [How to update CastXML version ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/update_castxml_version.rst)
 
 * [How to make a release ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/make_a_release.rst)
 
