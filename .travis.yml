@@ -27,12 +27,20 @@ cache:
   directories:
     # Cache downloaded bottles
     - $HOME/Library/Caches/Homebrew
+    # Cache python dependencies
+    - /usr/local/opt/gettext
+    # pyenv
     - $HOME/.pyenv_cache
     - $HOME/.pyenv/versions/3.7.8
     - $HOME/.pyenv/versions/2.7.15
+    # scikit-ci-addons
     - $HOME/downloads
 
 before_install:
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      test -d /usr/local/opt/gettext/lib  || { rmdir /usr/local/opt/gettext; brew install gettext; }
+    fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mkdir $HOME/bin; ln -s $(which pip2) $HOME/bin/pip; ln -s $(which python2) $HOME/bin/python; fi
   - python -m pip install --disable-pip-version-check --upgrade pip
   - pip install -U scikit-ci scikit-ci-addons
