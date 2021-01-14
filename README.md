@@ -3,7 +3,7 @@
 Introduction
 ============
 
-The latest CastXML python wheels provide CastXML 0.3.6 executable.
+The latest CastXML python wheels provide CastXML 0.4.2 executable.
 
 CastXML is a C-family abstract syntax tree XML output tool.
 

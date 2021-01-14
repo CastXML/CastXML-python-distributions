@@ -8,7 +8,7 @@ DIST_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../dist'))
 
 
 def _check_castxml_install(virtualenv, tmpdir):
-    expected_version = "0.3.6"
+    expected_version = "0.4.2"
 
     for executable_name in ["castxml"]:
         output = virtualenv.run(
@@ -24,6 +24,6 @@ def test_wheel(virtualenv, tmpdir):
     assert len(wheels) == 1
     print(wheels)
 
-    virtualenv.run("pip install %s" % wheels[0])
+    virtualenv.run("pip install --no-index %s" % wheels[0])
 
     _check_castxml_install(virtualenv, tmpdir)
