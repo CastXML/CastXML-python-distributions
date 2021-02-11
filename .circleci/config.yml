@@ -73,6 +73,7 @@ jobs:
             echo "Deploy release"
             python -m venv ../venv
             . ../venv/bin/activate
+            pip install --upgrade pip
             pip install twine
             ls dist
             twine upload -u __token__ -p $PYPI_PASSWORD --skip-existing dist/*
