@@ -14,6 +14,7 @@ set(macosx_binary_sha512 "4a6ca04003d94a09a9dd3226d1f5a4a420db3fb2eb5fb63549fe94
 set(win64_binary_url    "https://data.kitware.com/api/v1/file/607f0d192fa25629b9f667fe/download")
 set(win64_binary_sha512 "82ff5a23f385a0fddcd76c62fa109eb3cd087d6ba61ff0bdcd55a31341bdf2b383446260d53a4d2fac7d778f4d29c383de0429804d2050f0fb743e44c315fd94")
 
+# Package 64-bit binaries as the 32-bit ones.
 # See https://github.com/CastXML/CastXML-python-distributions/issues/5
 set(win32_binary_url    "${win64_binary_url}")
 set(win32_binary_sha512 "${win64_binary_sha512}")
