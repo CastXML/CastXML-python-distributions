@@ -16,13 +16,13 @@ Available CastXML archives can be found `here <https://data.kitware.com/#folder/
 2. Execute `scripts/update_castxml_version.py` command line tool with the desired
    ``X.Y.Z`` CastXML version available for download. For example::
 
-    $ release=0.4.2
+    $ release=0.4.3
     $ python scripts/update_castxml_version.py ${release}
 
     Collecting URLs and SHAs from 'https://data.kitware.com/#folder/57b5de948d777f10f2696370'
     Collecting URLs and SHAs from 'https://data.kitware.com/#folder/57b5de948d777f10f2696370' - done
-    Updating 'CastXMLUrls.cmake' with CastXML version 0.4.2
-    Updating 'CastXMLUrls.cmake' with CastXML version 0.4.2 - done
+    Updating 'CastXMLUrls.cmake' with CastXML version 0.4.3
+    Updating 'CastXMLUrls.cmake' with CastXML version 0.4.3 - done
     Updating README.md
     Updating README.md - done
     Updating docs/update_castxml_version.rst
@@ -33,7 +33,7 @@ Available CastXML archives can be found `here <https://data.kitware.com/#folder/
 3. Create a topic named `update-to-castxml-X.Y.Z` and commit the changes.
    For example::
 
-    release=0.4.2
+    release=0.4.3
     git checkout -b update-to-castxml-${release}
     git add CastXMLUrls.cmake README.md docs/update_castxml_version.rst tests/test_distribution.py
     git commit -m "Update to CastXML ${release}"

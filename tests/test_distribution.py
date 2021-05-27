@@ -8,7 +8,7 @@ DIST_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../dist'))
 
 
 def _check_castxml_install(virtualenv, tmpdir):
-    expected_version = "0.4.2"
+    expected_version = "0.4.3"
 
     for executable_name in ["castxml"]:
         output = virtualenv.run(
