@@ -20,7 +20,7 @@ before_install:
         # See https://scikit-build.readthedocs.io/en/latest/generators.html#libstdc-vs-libc
         CPPFLAGS: "-stdlib=libstdc++"
         PATH: $<HOME>/.pyenv/versions/$<PYTHON_VERSION>/bin:$<PATH>
-        SETUP_BDIST_WHEEL_ARGS: --plat-name macosx-10.13-x86_64
+        SETUP_BDIST_WHEEL_ARGS: --plat-name macosx-10.13
       commands:
         - python ../addons/travis/install_pyenv.py
 

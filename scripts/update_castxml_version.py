@@ -45,9 +45,9 @@ def get_archive_urls_and_shas(version, verbose=False):
         items = gc.listItem(archive_folder_ids[0])
 
         expected_files = {
-            "castxml-linux-amd64.tar.gz":  "linux64_binary",
-            "castxml-macosx-amd64.tar.gz": "macosx_binary",
-            "castxml-windows-amd64.zip":   "win64_binary",
+            "castxml-linux.tar.gz":  "linux64_binary",
+            "castxml-macosx.tar.gz": "macosx_binary",
+            "castxml-windows.zip":   "win64_binary",
         }
 
         # Get download URL and SHA512 for each file
