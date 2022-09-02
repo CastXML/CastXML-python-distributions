@@ -5,16 +5,15 @@
 set(linux32_binary_url    "NA")  # Linux 32-bit binaries not available
 set(linux32_binary_sha512 "NA")
 
-set(linux64_binary_url    "https://data.kitware.com/api/v1/file/607f0cd12fa25629b9f667ce/download")
-set(linux64_binary_sha512 "1610df48287cc67cc9bf46c23c5fe0d26d1d98868041993f36670d9485b5f7126b702dfd6437760199d2f92dea0e527c32cae47dc399a17ce191e7cb9521a2cf")
+set(linux64_binary_url    "https://data.kitware.com/api/v1/file/622961384acac99f42134a8a/download")
+set(linux64_binary_sha512 "a2da44515bea720e57ee1d335e05aea279a9ca3c39caad4b501af330f8f54363f5cb5512dd53643966f68d28b9b69961ed9ecf286ded24615a5a946790090543")
 
-set(macosx_binary_url    "https://data.kitware.com/api/v1/file/607f0ceb2fa25629b9f667de/download")
-set(macosx_binary_sha512 "4a6ca04003d94a09a9dd3226d1f5a4a420db3fb2eb5fb63549fe9469afe39bf728cfc35b80e723764f2dd106faffe480afc0fb175cd5ec6b9971efa1422632d1")
+set(macosx_binary_url    "https://data.kitware.com/api/v1/file/622961284acac99f42134a6a/download")
+set(macosx_binary_sha512 "1964b50b51970e9f9249fe4cf896302df024781abe8e7d888e91d8b14dfa01b29face1d808c9bff10209b0d3e77963c03fe7b3e28d2ccaa4aba7d18d12c82b88")
 
-set(win64_binary_url    "https://data.kitware.com/api/v1/file/607f0d192fa25629b9f667fe/download")
-set(win64_binary_sha512 "82ff5a23f385a0fddcd76c62fa109eb3cd087d6ba61ff0bdcd55a31341bdf2b383446260d53a4d2fac7d778f4d29c383de0429804d2050f0fb743e44c315fd94")
+set(win64_binary_url    "https://data.kitware.com/api/v1/file/622961504acac99f42134aaf/download")
+set(win64_binary_sha512 "56cf92eb9ca543a6178689643d32a455da1f92da78ca58a8cb671798ac9f903dc6b687be1d3824ab0211ed49724b62185a21874810139de7dbb6cb39f63b860f")
 
-# Package 64-bit binaries as the 32-bit ones.
 # See https://github.com/CastXML/CastXML-python-distributions/issues/5
 set(win32_binary_url    "${win64_binary_url}")
 set(win32_binary_sha512 "${win64_binary_sha512}")
