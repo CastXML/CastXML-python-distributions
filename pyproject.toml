@@ -1,15 +1,35 @@
 [build-system]
-requires = [
-    "cmake>=3.17",  # matches cmake_minimum_required in CMakeLists.txt
-    "scikit-build",
-    "setuptools>=77",  # SPDX `license` string support (PEP 639)
-    "versioneer[toml]",
+requires = ["scikit-build-core>=1.0", "setuptools-scm>=8"]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+
+[tool.scikit-build.ninja]
+make-fallback = false
+
+[tool.scikit-build.sdist]
+# Only files matching `include` go into the sdist.
+inclusion-mode = "explicit"
+include = [
+    "/castxml/*.py",
+    "/CMakeLists.txt",
+    "/*.cmake",
+    "/pyproject.toml",
+    "/README.md",  # referenced by project.readme
+    "/tests/*.py",  # lets downstream packagers test the wheel they build from the sdist
 ]
-build-backend = "setuptools.build_meta"
+
+[tool.scikit-build.wheel]
+packages = ["castxml"]
+install-dir = "castxml/data"
+# The wheel ships a standalone executable, not an extension module, so tag it
+# py3-none-<platform> instead of tying it to one CPython version.
+py-api = "py3"
 
 [project]
 name = "castxml"
-dynamic = ["version"]  # supplied by versioneer in setup.py
+dynamic = ["version"]  # supplied by setuptools-scm from git tags
 description = "Parse C-family source files and optionally write a subset of the Abstract Syntax Tree (AST) to a representation in XML."
 readme = "README.md"
 requires-python = ">=3"
@@ -50,7 +70,6 @@ test = [
     "pytest>=9",  # needed for the native [tool.pytest] table below
     "pytest-cov",
     "pytest-virtualenv",
-    "scikit-build",  # castxml/__init__.py uses it to find the binary in an uninstalled source tree
 ]
 lint = ["flake8>=7"]
 release = ["build", "twine"]
@@ -61,11 +80,10 @@ dev = [
 
 [tool.pytest]
 testpaths = ["tests"]
-addopts = ["-v", "--cov", "--cov-report", "xml"]
+addopts = ["-v", "--import-mode=importlib", "--cov", "--cov-report", "xml"]
 
-[tool.versioneer]
-VCS = "git"
-versionfile_source = "castxml/_version.py"
-versionfile_build = "castxml/_version.py"
-style = "pep440-post"
-tag_prefix = ""
+[[tool.dynamic-metadata]]
+provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+version_file = "castxml/_version.py"
