@@ -1,2 +1,71 @@
 [build-system]
-requires = ["setuptools", "wheel", "scikit-build"]
+requires = [
+    "cmake>=3.17",  # matches cmake_minimum_required in CMakeLists.txt
+    "scikit-build",
+    "setuptools>=77",  # SPDX `license` string support (PEP 639)
+    "versioneer[toml]",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "castxml"
+dynamic = ["version"]  # supplied by versioneer in setup.py
+description = "Parse C-family source files and optionally write a subset of the Abstract Syntax Tree (AST) to a representation in XML."
+readme = "README.md"
+requires-python = ">=3"
+license = "Apache-2.0"
+authors = [
+    {name = "Kitware", email = "kitware@kitware.com"},
+]
+maintainers = [
+    {name = "John Parent", email = "john.parent@kitware.com"},
+]
+keywords = ["castxml", "ast", "xml", "cmake", "cross-platform", "c++", "llvm", "build"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Build Tools",
+]
+# The package only wraps a prebuilt executable, so there are no runtime dependencies.
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/castxml/castxml"
+Documentation = "https://github.com/CastXML/CastXML/blob/master/doc/manual/castxml.1.rst"
+Repository = "https://github.com/CastXML/CastXML-python-distributions"
+Issues = "https://github.com/CastXML/CastXML-python-distributions/issues"
+
+[project.scripts]
+castxml = "castxml:castxml"
+
+[dependency-groups]
+test = [
+    "path",
+    "pytest>=9",  # needed for the native [tool.pytest] table below
+    "pytest-cov",
+    "pytest-virtualenv",
+    "scikit-build",  # castxml/__init__.py uses it to find the binary in an uninstalled source tree
+]
+lint = ["flake8>=7"]
+release = ["build", "twine"]
+dev = [
+    {include-group = "test"},
+    {include-group = "lint"},
+]
+
+[tool.pytest]
+testpaths = ["tests"]
+addopts = ["-v", "--cov", "--cov-report", "xml"]
+
+[tool.versioneer]
+VCS = "git"
+versionfile_source = "castxml/_version.py"
+versionfile_build = "castxml/_version.py"
+style = "pep440-post"
+tag_prefix = ""

@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 120
+# Whether to show source code for each failure
+show-source = true
+# Maximum cyclomatic complexity allowed
+max-complexity = 14
+format = pylint
+exclude = .git,.idea,.eggs,__pycache__,.tox,.venv,_skbuild,build,dist,castxml/_version.py
