@@ -1,65 +1,39 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.20)
 
-project(CastXMLPythonDistributions)
-
-list(PREPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Options
-set(ARCHIVE_DOWNLOAD_DIR "${CMAKE_BINARY_DIR}" CACHE PATH "Directory where to download archives")
-
-include(CastXMLUrls)
+project(CastXMLPythonDistributions LANGUAGES C CXX)
 
 #-----------------------------------------------------------------------------
-# Which archives ?
+# Build CastXML from source with the CastXML superbuild, which builds
+# LLVM/Clang and then CastXML against them.
 #-----------------------------------------------------------------------------
-function(check_archive_var archive_var)
-  if(NOT DEFINED "${archive_var}_url")
-    message(FATAL_ERROR "Failed to determine which archive to download: '${archive_var}_url' variable is not defined")
-  endif()
-  if(NOT DEFINED "${archive_var}_sha512")
-    message(FATAL_ERROR "Could you make sure variable '${archive_var}_sha512' is defined ?")
-  endif()
-endfunction()
+set(CASTXML_SUPERBUILD_GIT_TAG "0b677ec7bd49fa64bf7761aaed5a5129293c8094"
+  CACHE STRING "CastXMLSuperbuild Git revision")
 
-set(binary_archive "linux32_binary")
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(binary_archive "linux64_binary")
-endif()
-if(APPLE)
-  set(binary_archive "macosx_binary")
-endif()
-if(WIN32)
-  set(binary_archive "win32_binary")
-  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(binary_archive "win64_binary")
-  endif()
-endif()
-check_archive_var("${binary_archive}")
+# The superbuild pins its own CastXML revision and FORCE-sets it in the cache,
+# so it can't be overridden with -D. PatchCastXMLSuperbuild.cmake rewrites
+# that pin to this revision instead.
+set(CASTXML_GIT_TAG "v0.8.0" CACHE STRING "CastXML Git revision")
 
-#-----------------------------------------------------------------------------
-# Summary
-#-----------------------------------------------------------------------------
-message(STATUS "*********************************************")
-message(STATUS "CastXML Python Distribution")
-message(STATUS "")
-message(STATUS "  ARCHIVE_DOWNLOAD_DIR      : ${ARCHIVE_DOWNLOAD_DIR}")
-message(STATUS "")
-message(STATUS "    binary_archive             : ${binary_archive}")
-message(STATUS "    <binary_archive>_url       : ${${binary_archive}_url}")
-message(STATUS "    <binary_archive>_sha512    : ${${binary_archive}_sha512}")
-message(STATUS "")
-message(STATUS "*********************************************")
-
-#-----------------------------------------------------------------------------
-# Download pre-built archive
-#-----------------------------------------------------------------------------
 include(FetchContent)
-FetchContent_Populate(castxmlrelease
-  URL ${${binary_archive}_url}
-  URL_HASH SHA512=${${binary_archive}_sha512}
+FetchContent_Declare(castxmlsuperbuild
+  GIT_REPOSITORY https://github.com/CastXML/CastXMLSuperbuild.git
+  GIT_TAG ${CASTXML_SUPERBUILD_GIT_TAG}
+  PATCH_COMMAND ${CMAKE_COMMAND}
+    -DCASTXML_GIT_TAG=${CASTXML_GIT_TAG}
+    -P ${CMAKE_CURRENT_SOURCE_DIR}/PatchCastXMLSuperbuild.cmake
   )
-set(CASTXML_RELEASE_DIR ${castxmlrelease_SOURCE_DIR})
+FetchContent_MakeAvailable(castxmlsuperbuild)
 
-set(castxml_executable ${CASTXML_RELEASE_DIR}/bin/castxml${CMAKE_EXECUTABLE_SUFFIX})
-install(PROGRAMS ${castxml_executable} DESTINATION bin)
-install(DIRECTORY ${CASTXML_RELEASE_DIR}/share/ DESTINATION share)
+message(STATUS "CastXMLSuperbuild revision: ${CASTXML_SUPERBUILD_GIT_TAG}")
+message(STATUS "CastXML revision: ${CASTXML_GIT_TAG}")
+
+#-----------------------------------------------------------------------------
+# Install
+#-----------------------------------------------------------------------------
+# The superbuild installs CastXML into <superbuild binary dir>/castxml while
+# building. Ship that whole tree: bin/castxml finds its bundled Clang headers
+# relative to itself in share/castxml.
+install(DIRECTORY ${castxmlsuperbuild_BINARY_DIR}/castxml/
+  DESTINATION .
+  USE_SOURCE_PERMISSIONS
+  )

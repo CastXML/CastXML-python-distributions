@@ -4,6 +4,9 @@ build-backend = "scikit_build_core.build"
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
+# Keep the build tree between local builds so rebuilding doesn't redo the
+# LLVM/Clang build from scratch. CI and sdist builds always start fresh.
+build-dir = "build/{wheel_tag}"
 
 [tool.scikit-build.ninja]
 make-fallback = false
@@ -52,7 +55,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Software Development :: Build Tools",
 ]
-# The package only wraps a prebuilt executable, so there are no runtime dependencies.
+# The package only wraps the CastXML executable, so there are no runtime dependencies.
 dependencies = []
 
 [project.urls]
@@ -90,12 +93,17 @@ version_file = "castxml/_version.py"
 [tool.cibuildwheel]
 manylinux-x86_64-image = "manylinux2014"
 manylinux-aarch64-image = "manylinux_2_28"
-# The prebuilt Linux CastXML binary links against glibc.
+# Each wheel build compiles LLVM/Clang, so build only for the runner's own
+# architecture (no 32-bit or cross builds), and skip musllinux, which would
+# be a second LLVM build on every Linux runner.
+archs = ["native"]
 skip = ["*-musllinux_*"]
 
 test-requires = "pytest"
 test-command = "pytest --import-mode=importlib {project}/tests/test_castxml.py"
 
-[tool.cibuildwheel.linux]
-# No 32-bit Linux CastXML binary exists.
-archs = ["x86_64"]
+[tool.cibuildwheel.windows]
+# Build with Ninja instead of Visual Studio/MSBuild: much faster for LLVM, and
+# the superbuild switches its LLVM/Clang/CastXML builds to Ninja whenever it
+# finds ninja anyway. The workflow sets up the MSVC environment Ninja needs.
+environment = { CMAKE_GENERATOR = "Ninja" }

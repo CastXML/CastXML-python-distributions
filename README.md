@@ -3,13 +3,15 @@
 Introduction
 ============
 
-The latest CastXML python wheels provide CastXML 0.4.5 executable.
+The latest CastXML python wheels provide the CastXML 0.8.0 executable, built
+from source with the [CastXML superbuild][superbuild].
 
 CastXML is a C-family abstract syntax tree XML output tool.
 
 This project is maintained by [Kitware][kitware] in support of [ITK][itk],
 the Insight Segmentation and Registration Toolkit.
 
+[superbuild]: https://github.com/CastXML/CastXMLSuperbuild
 [kitware]: https://www.kitware.com/
 [itk]: https://itk.org/
 

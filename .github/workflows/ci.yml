@@ -15,19 +15,41 @@ on:
 
 jobs:
   build-wheels:
+    name: Wheels (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
+      # Each job builds LLVM/Clang, so don't cancel the rest when one fails.
+      fail-fast: false
       matrix:
-        # x86_64 only: CastXMLUrls.cmake only has x86_64 CastXML binaries.
-        # Add ARM runners back once CastXML is built from source.
-        os: [ubuntu-latest, macos-15-intel, windows-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-15-intel, macos-latest, windows-latest, windows-11-arm]
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0  # setuptools-scm needs the tags to compute the version
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.x"
+      # Build the wheels from the sdist, so every platform also checks that the
+      # sdist builds and that its tests pass, without a separate LLVM build.
+      - name: Build SDist
+        id: sdist
+        shell: bash
+        run: |
+          python -m pip install build
+          python -m build --sdist
+          echo "path=$(ls dist/*.tar.gz)" >> "$GITHUB_OUTPUT"
+      - name: Set up MSVC
+        # The Windows builds use Ninja, which needs the MSVC environment.
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        with:
+          arch: ${{ runner.arch == 'ARM64' && 'arm64' || 'x64' }}
       - name: Build Wheels
         uses: pypa/cibuildwheel@e090b81e30c4d855ea63bf4b6e59204c09a101ae # v4.2.1
+        with:
+          package-dir: ${{ steps.sdist.outputs.path }}
       - name: Upload Wheel
         if: github.event_name == 'release'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -52,19 +74,7 @@ jobs:
       - name: Check SDist
         run: |
           pipx run twine check dist/*
-      - name: Test SDist
-        # Mirror a downstream packager: build and install from the sdist, then
-        # run the sdist's own tests against that install.
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install dist/*.tar.gz
-          mkdir sdist-test
-          tar -xzf dist/*.tar.gz -C sdist-test --strip-components=1
-          cd sdist-test
-          python -m pip install --group test
-          # Not `python -m pytest`: that puts the unpacked source package on
-          # sys.path ahead of the installed one, which has the binary.
-          pytest
+      # Building and testing the sdist happens in build-wheels.
       - name: Upload SDist
         if: github.event_name == 'release'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
