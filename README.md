@@ -26,31 +26,21 @@ Latest Release
 [![][pypi-version-img]][pypi] [![][pypi-download-img]][pypi]
 
 [pypi-version-img]: https://img.shields.io/pypi/v/castxml.svg
-[pypi-download-img]: https://img.shields.io/badge/downloads-0%20total-green.svg
+[pypi-download-img]: https://img.shields.io/pypi/dm/castxml.svg
 [pypi]: https://pypi.python.org/pypi/castxml
 
 Build Status
 ============
 
-|      | Linux | macOS | Windows  |
-|------|-------|-------|----------|
-| PyPI | [![][ci-status-linux-img]][ci-status-linux] | [![][ci-status-macos-img]][ci-status-macos] | [![][ci-status-win-img]][ci-status-win] |
+[![][ci-status-img]][ci-status]
 
-[ci-status-linux-img]: https://circleci.com/gh/CastXML/CastXML-python-distributions.svg?style=shield
-[ci-status-linux]: https://circleci.com/gh/CastXML/CastXML-python-distributions
-
-[ci-status-macos-img]: https://travis-ci.org/CastXML/CastXML-python-distributions.svg?branch=master
-[ci-status-macos]: https://travis-ci.org/CastXML/CastXML-python-distributions
-
-[ci-status-win-img]: https://ci.appveyor.com/api/projects/status/56orbr008wcgjyr4?svg=true
-[ci-status-win]: https://ci.appveyor.com/project/CastXML/CastXML-python-distributions/branch/master
+[ci-status-img]: https://github.com/CastXML/CastXML-python-distributions/actions/workflows/ci.yml/badge.svg?branch=master
+[ci-status]: https://github.com/CastXML/CastXML-python-distributions/actions/workflows/ci.yml
 
 Maintainers
 ===========
 
-* [How to update CastXML version ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/update_castxml_version.rst)
-
-* [How to make a release ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/make_a_release.rst)
+* [How to make a release ?](https://github.com/CastXML/CastXML-python-distributions/blob/master/docs/make_a_release.md)
 
 Miscellaneous
 =============
