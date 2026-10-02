@@ -133,12 +133,6 @@ def update_docs(version):
         os.path.join(ROOT_DIR, "README.md"),
         pattern, replacement)
 
-    pattern = re.compile(r"\d\.\d\.\d")
-    replacement = version
-    _update_file(
-        os.path.join(ROOT_DIR, "docs/update_castxml_version.rst"),
-        pattern, replacement)
-
 
 def update_tests(version):
     pattern = re.compile(r'expected_version = "\d.(\d)+.\d"')
